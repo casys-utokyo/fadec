@@ -94,8 +94,8 @@ TBD
 
 ## 7. Execute FADEC on ZCU104
 
-- Prepare datasets by following 1st and 2nd procedures if necessary.
-- Download and place `flattened_params` under `fadec` from [flattened_params.zip](https://projects.n-hassy.info/storage/fadec/flattened_params.zip) if necessary.
+- Prepare datasets by following the 1st and 2nd procedures if necessary.
+- Download and place `flattened_params` under [`./eval/fadec`](./eval/fadec) from [flattened_params.zip](https://projects.n-hassy.info/storage/fadec/flattened_params.zip) if necessary.
 - Place [`./eval/fadec`](./eval/fadec) on ZCU104.
 - Place `design_1.bit` and `design_1.hwh` in `fadec` directory on ZCU104.
     - [`./dev/vivado/move_bitstream.sh`](./dev/vivado/move_bitstream.sh) is helpful to find and move these files.
@@ -149,6 +149,9 @@ TBD
 
 ## 8. Evaluate results
 
+- Prepare datasets by following the 1st and 2nd procedures if necessary.
+- Download and place `params_cpp` under [`./eval/cpp`](./eval/cpp) from [params_cpp.zip](https://projects.n-hassy.info/storage/fadec/params_cpp.zip) if necessary.
+- Download and place `params_cpp_with_ptq` under [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) from [params_cpp_with_ptq.zip](https://projects.n-hassy.info/storage/fadec/params_cpp_with_ptq.zip) if necessary.
 - Place [`./eval/cpp`](./eval/cpp) and [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) on ZCU104.
 - Execute C++ implementations by the following commands.
 
