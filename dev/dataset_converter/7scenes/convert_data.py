@@ -75,7 +75,7 @@ def prepare(test_dataset_name):
 
 if __name__ == '__main__':
     dataset_names = {}
-    test_dataset_names = ["chess-seq-01", "chess-seq-02", "fire-seq-01", "fire-seq-02", "heads-seq-02", "office-seq-01", "office-seq-03", "redkitchen-seq-01", "redkitchen-seq-07"]
+    test_dataset_names = ["chess-seq-01", "chess-seq-02", "fire-seq-01", "fire-seq-02", "office-seq-01", "office-seq-03", "redkitchen-seq-01", "redkitchen-seq-07"]
 
     save_dir = Path(os.path.dirname(os.path.abspath(__file__))) / 'data'
     os.makedirs(save_dir, exist_ok=True)

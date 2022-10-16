@@ -65,7 +65,6 @@ if __name__ == '__main__':
         input_folder / "redkitchen/seq-07",
         input_folder / "chess/seq-01",
         input_folder / "chess/seq-02",
-        input_folder / "heads/seq-02",
         input_folder / "fire/seq-01",
         input_folder / "fire/seq-02",
         input_folder / "office/seq-01",
