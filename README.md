@@ -79,8 +79,9 @@ TBD
         # You can also specify a remote directory for the project directory.
         ```
 
+    - You can also download these files from [https://projects.n-hassy.info/storage/fadec/design_1.zip](https://projects.n-hassy.info/storage/fadec/design_1.zip)
 - Execute [`7scenes_evaluation.ipynb`](./eval/fadec/7scenes_evaluation.ipynb) on ZCU104.
-    - Output will be stored in [`depths`](./eval/fadec/depths) and [`time_fadec.txt`](./eval/fadec/time_fadec.txt).
+    - Outputs will be stored in [`depths`](./eval/fadec/depths) and [`time_fadec.txt`](./eval/fadec/time_fadec.txt).
     - If the following error happens in the 7th cell, reboot ZCU104 and retry.
 
         ```
@@ -132,6 +133,7 @@ TBD
     $ ./a.out > time_cpp_with_ptq.txt
     ```
 
+    - Outputs will be stored in `results` and (`time_cpp.txt` or `time_cpp_with_ptq.txt`).
 - Execute [`calculate_time.py`](./eval/calculate_time.py) by the following commands.
 
     ```bash
