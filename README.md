@@ -79,7 +79,7 @@ TBD
         # You can also specify a remote directory for the project directory.
         ```
 
-    - You can also download these files from [https://projects.n-hassy.info/storage/fadec/design_1.zip](https://projects.n-hassy.info/storage/fadec/design_1.zip)
+    - You can also download these files from https://projects.n-hassy.info/storage/fadec/design_1.zip
 - Execute [`7scenes_evaluation.ipynb`](./eval/fadec/7scenes_evaluation.ipynb) on ZCU104.
     - Outputs will be stored in [`depths`](./eval/fadec/depths) and [`time_fadec.txt`](./eval/fadec/time_fadec.txt).
     - If the following error happens in the 7th cell, reboot ZCU104 and retry.
