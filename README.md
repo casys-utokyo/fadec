@@ -121,7 +121,7 @@ TBD
 ## 8. Evaluate results
 
 - Place [`./eval/cpp`](./eval/cpp) and [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) on ZCU104.
-- Execute C++ implementations by the following command.
+- Execute C++ implementations by the following commands.
 
     ```bash
     $ cd /path/to/cpp
@@ -132,4 +132,9 @@ TBD
     $ ./a.out > time_cpp_with_ptq.txt
     ```
 
-- Execute [`calculate_time.py`](./eval/calculate_time.py).
+- Execute [`calculate_time.py`](./eval/calculate_time.py) by the following commands.
+
+    ```bash
+    $ cd /path/to/eval
+    $ python3 calculate_time.py
+    ```
