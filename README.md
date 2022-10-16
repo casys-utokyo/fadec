@@ -1,6 +1,6 @@
 # FADEC
 
-FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design with NNgen
+**FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design with NNgen**
 
 Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 
@@ -130,6 +130,7 @@ TBD
     $ ./generate_bitstream.sh
     ```
 
+    - Outputs will be stored in `./dev/vivado/dvmvs`.
     - Note: It will take some hours to finish.
 - The design image is shown in the figure below.
 
@@ -147,7 +148,7 @@ TBD
         ```sh
         $ cd dev/vivado
         $ ./move_bitstream.sh /path/to/vivado_project_directory pynq:/path/to/fadec
-        # The project directory name should be "dvmvs".
+        # The project directory would be "./dev/vivado/dvmvs" by default.
         # You can also specify a remote directory for the project directory.
         ```
 
