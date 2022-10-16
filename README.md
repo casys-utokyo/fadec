@@ -5,22 +5,22 @@ FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design with NNgen
 Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 
 
-## License
+# License
 
 Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 
 
-## Summary
+# Summary
 
 TBD
 
 
-## Requirement
+# Requirement
 
 TBD
 
 
-## Procedure
+# Procedure
 
 1. Prepare datasets and a model
 1. Adjust datasets to our implementation
@@ -140,3 +140,17 @@ TBD
     $ cd /path/to/eval
     $ python3 calculate_time.py
     ```
+
+## Reference
+
+```
+@inproceedings{Duzceker_2021_CVPR,
+    author    = {Duzceker, Arda and Galliani, Silvano and Vogel, Christoph and
+                 Speciale, Pablo and Dusmanu, Mihai and Pollefeys, Marc},
+    title     = {DeepVideoMVS: Multi-View Stereo on Video With Recurrent Spatio-Temporal Fusion},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2021},
+    pages     = {15324-15333}
+}
+```
