@@ -34,18 +34,18 @@ TBD
 
 ## 1. Prepare pre-trained weights and datasets
 
-- Download the pre-trained weights from [`ardaduz/deep-video-mvs/dvmvs/fusionnet/weights`](https://github.com/ardaduz/deep-video-mvs/tree/master/dvmvs/fusionnet/weights).
+- Download the pre-trained weights from [ardaduz/deep-video-mvs/dvmvs/fusionnet/weights](https://github.com/ardaduz/deep-video-mvs/tree/master/dvmvs/fusionnet/weights).
 - Place it under [`./dev/params`](./dev/params/).
     - The directory name should be changed from `weights` to `org_weights`.
     - The path should be `./dev/params/org_weights`.
-- Download the `hololens` dataset from [`ardaduz/deep-video-mvs/sample-data/hololens-dataset`](https://github.com/ardaduz/deep-video-mvs/tree/master/sample-data/hololens-dataset).
+- Download the `hololens` dataset from [ardaduz/deep-video-mvs/sample-data/hololens-dataset](https://github.com/ardaduz/deep-video-mvs/tree/master/sample-data/hololens-dataset).
 - Place it under [`./dev/dataset`](./dev/dataset).
     - The path should be `./dev/dataset/hololens-dataset`.
 - Download the `7scenes` dataset from [
 RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-dataset-7-scenes/).
 - Unzip the files.
     - Note: We just use the following eight scenes: `redkitchen/seq-01`, `redkitchen/seq-07`, `chess/seq-01`, `chess/seq-02`, `fire/seq-01`, `fire/seq-02`, `office/seq-01`, `office/seq-03`.
-- Set the downloaded 7scenes path to the `input_folder` variable in [`./dev/dataset7scenes_export.py`](./dev/dataset/7scenes_export.py).
+- Set the downloaded 7scenes path to the `input_folder` variable in [`./dev/dataset/7scenes_export.py`](./dev/dataset/7scenes_export.py).
 - Execute the script by the following command.
 
     ```bash
@@ -65,7 +65,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     $ python3 convert_data.py
     ```
 
-    - Outputs will be stored in [`hololens/images`](./dev/dataset_converter/hololens/images/) and [`7scenes/data`](./dev/dataset_converter/7scenes/data/).
+    - Outputs will be stored in `hololens/images` and `7scenes/data`.
 
 
 ## 3. Quantize weights and activation
@@ -95,7 +95,7 @@ TBD
 ## 7. Execute FADEC on ZCU104
 
 - Prepare datasets by following 1st and 2nd procedures if necessary.
-- Download and place `flattened_params` under `fadec` from [`flattened_params.zip`](https://projects.n-hassy.info/storage/fadec/flattened_params.zip) if necessary.
+- Download and place `flattened_params` under `fadec` from [flattened_params.zip](https://projects.n-hassy.info/storage/fadec/flattened_params.zip) if necessary.
 - Place [`./eval/fadec`](./eval/fadec) on ZCU104.
 - Place `design_1.bit` and `design_1.hwh` in `fadec` directory on ZCU104.
     - [`./dev/vivado/move_bitstream.sh`](./dev/vivado/move_bitstream.sh) is helpful to find and move these files.
@@ -107,7 +107,7 @@ TBD
         # You can also specify a remote directory for the project directory.
         ```
 
-    - You can also download these files from [`design_1.zip`](https://projects.n-hassy.info/storage/fadec/design_1.zip)
+    - You can also download these files from [design_1.zip](https://projects.n-hassy.info/storage/fadec/design_1.zip)
 - Execute [`./eval/fadec/7scenes_evaluation.ipynb`](./eval/fadec/7scenes_evaluation.ipynb) on ZCU104.
     - Outputs will be stored in [`depths`](./eval/fadec/depths) and [`time_fadec.txt`](./eval/fadec/time_fadec.txt).
     - If the following error happens in the 7th cell, reboot ZCU104 and retry.
