@@ -1,0 +1,13 @@
+dev/dataset_converter/7scenes/data
+dev/dataset_converter/hololens/images
+
+dev/params/org_weights
+dev/params/params_cpp
+dev/params/params_cpp_with_ptq
+dev/params/quantized_params
+dev/params/tmp
+dev/params/flattened_params
+
+eval/fadec/design_1.bit
+eval/fadec/design_1.hwh
+eval/fadec/depths/*.npz
