@@ -123,8 +123,14 @@ TBD
 
 ## 6. Generate bitstream
 
-TBD
+- Execute [`./dev/vivado/generate_bitstream.sh`](./dev/vivado/generate_bitstream.sh) by the following commands.
 
+    ```sh
+    $ cd dev/vivado
+    $ ./generate_bitstream.sh
+    ```
+
+    - Note: It will take some hours to finish.
 - The design image is shown in the figure below.
 
     ![design image](./img/design_1.png)
