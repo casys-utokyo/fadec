@@ -15,11 +15,6 @@ Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 TBD
 
 
-# Requirement
-
-TBD
-
-
 # Procedure
 
 1. Prepare pre-trained weights and datasets
@@ -30,6 +25,49 @@ TBD
 1. Generate bitstream
 1. Execute FADEC on ZCU104
 1. Evaluate results
+
+
+## Settings
+
+### 1st to 4th
+
+- Python 3.8.12
+    - numpy==1.20.3
+    - opencv-contrib-python==4.5.4.60
+    - path==15.0.0
+    - torch==1.5.1+cu101
+    - torchvision==0.6.1+cu101
+
+
+### 5th
+
+- Python 3.8.2
+    - nngen==1.3.3
+    - numpy==1.22.3
+    - onnx==1.11.0
+    - pyverilog==1.3.0
+    - torch==1.11.0
+    - veriloggen==2.1.0
+
+Note: The environment is changed from "1st to 4th" because we used different machines.
+
+
+### 6th
+
+- Vivado v2021.2
+
+
+### 7th and 8th
+
+- **ZCU104** board with Zynq UltraScale+ MPSoC XCZU7EV-2FFVC1156 from Xilinx
+    - PYNQ Linux 2.6, based on Ubuntu 18.04 (GNU/Linux 5.4.0-xilinx-v2020.1 aarch64)
+    - Python 3.6.5
+        - Cython==0.29
+        - numpy==1.16.0
+        - torch==1.10.2
+    - g++ (Ubuntu/Linaro 7.3.0-16ubuntu3) 7.3.0 (for the 8th)
+        - OpenCV v3.4.3 C++
+        - Eigen v3.3.4
 
 
 ## 1. Prepare pre-trained weights and datasets
@@ -108,6 +146,13 @@ TBD
         ```
 
     - You can also download these files from [design_1.zip](https://projects.n-hassy.info/storage/fadec/design_1.zip)
+- Compile [`./eval/fadec/fusion.pyx`](./eval/fadec/fusion.pyx) on ZCU104 by the following commands.
+
+    ```bash
+    $ cd /path/to/fadec
+    $ make
+    ```
+
 - Execute [`./eval/fadec/7scenes_evaluation.ipynb`](./eval/fadec/7scenes_evaluation.ipynb) on ZCU104.
     - Outputs will be stored in [`depths`](./eval/fadec/depths) and [`time_fadec.txt`](./eval/fadec/time_fadec.txt).
     - If the following error happens in the 7th cell, reboot ZCU104 and retry.
@@ -147,6 +192,7 @@ TBD
         RuntimeError: Failed to allocate Memory!
         ```
 
+
 ## 8. Evaluate results
 
 - Prepare datasets by following the 1st and 2nd procedures if necessary.
@@ -171,6 +217,7 @@ TBD
     $ cd /path/to/eval
     $ python3 calculate_time.py
     ```
+
 
 ## Reference
 
