@@ -22,18 +22,18 @@ def process_color(input_directories, output_folder):
 
         scene = input_directory.split("/")[-2]
         seq = input_directory.split("/")[-1]
-        current_output_dir = output_folder / scene + "-" + seq
-        os.makedirs(os.path.join(current_output_dir, "images"), exist_ok=True)
+        current_output_dir = output_folder / (scene + "-" + seq)
+        os.makedirs(current_output_dir / "images", exist_ok=True)
 
         output_poses = []
         for current_index in range(len(image_filenames)):
             image = cv2.imread(image_filenames[current_index])
             output_poses.append(poses[current_index].ravel().tolist())
-            cv2.imwrite("{}/images/{}.png".format(current_output_dir, str(current_index).zfill(6)), image, [cv2.IMWRITE_PNG_COMPRESSION, 3])
+            cv2.imwrite(current_output_dir / "images/{}.png".format(str(current_index).zfill(6)), image, [cv2.IMWRITE_PNG_COMPRESSION, 3])
 
         output_poses = np.array(output_poses)
-        np.savetxt("{}/poses.txt".format(current_output_dir), output_poses)
-        np.savetxt("{}/K.txt".format(current_output_dir), K)
+        np.savetxt(current_output_dir / "poses.txt", output_poses)
+        np.savetxt(current_output_dir / "K.txt", K)
 
         print("\t\tFinished: ", scene + "-" + seq)
 
@@ -46,6 +46,7 @@ def process_depth(input_directories, output_folder):
 
         depth_files = sorted(input_directory.files("*depth.png"))
         scene_output_folder = output_folder / (scene + "-" + seq) / 'depth'
+        os.makedirs(scene_output_folder, exist_ok=True)
 
         for index, file in enumerate(depth_files):
             depth = cv2.imread(file, -1)
