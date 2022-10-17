@@ -20,9 +20,9 @@ void read_params() {
     ifstream ifs;
 
     int n_params[n_files];
-    ifs.open(param_folder + "/values");
+    ifs.open(param_folder + "values");
     if (!ifs) {
-        cerr << "FileNotFound: " + param_folder + "/values" << "\n";
+        cerr << "FileNotFound: " + param_folder + "values" << "\n";
         exit(1);
     }
     ifs.read((char*) n_params, sizeof(int) * n_files);
@@ -32,9 +32,9 @@ void read_params() {
     for (int i = 0; i < n_files; i++)
         start_idx[i+1] = start_idx[i] + n_params[i];
 
-    ifs.open(param_folder + "/params");
+    ifs.open(param_folder + "params");
     if (!ifs) {
-        cerr << "FileNotFound: " + param_folder + "/params" << "\n";
+        cerr << "FileNotFound: " + param_folder + "params" << "\n";
         exit(1);
     }
     ifs.read((char*) params, sizeof(float) * start_idx[n_files]);
@@ -98,9 +98,9 @@ int main() {
     ifstream ifs;
     string file_buf;
 
-    ifs.open(scene_folder + "/K.txt");
+    ifs.open(scene_folder + "K.txt");
     if (!ifs) {
-        cerr << "FileNotFound: " + scene_folder + "/K.txt" << "\n";
+        cerr << "FileNotFound: " + scene_folder + "K.txt" << "\n";
         exit(1);
     }
     float K[3][3];
@@ -126,9 +126,9 @@ int main() {
     for (int i = 0; i < 2; i++) for (int j = 0; j < 3; j++) lstm_K_bottom[i][j] = full_K[i][j] / 32.0;
     for (int j = 0; j < 3; j++) lstm_K_bottom[2][j] = full_K[2][j];
 
-    ifs.open(scene_folder + "/poses.txt");
+    ifs.open(scene_folder + "poses.txt");
     if (!ifs) {
-        cerr << "FileNotFound: " + scene_folder + "/poses.txt" << "\n";
+        cerr << "FileNotFound: " + scene_folder + "poses.txt" << "\n";
         exit(1);
     }
     vector<float> tmp_poses;
@@ -155,7 +155,7 @@ int main() {
     }
     // print1(n_poses);
 
-    const string image_filedir = "./images/";
+    const string image_filedir = scene_folder;
     const int len_image_filedir = image_filedir.length();
     string image_filenames[n_test_frames];
     for (int i = 0; i < n_test_frames; i++) {

@@ -1,8 +1,8 @@
 #pragma once
 #include "settings.h"
 
-constexpr int org_image_width = 540;
-constexpr int org_image_height = 360;
+constexpr int org_image_width = 320;
+constexpr int org_image_height = 256;
 
 constexpr int test_image_width = 96;
 constexpr int test_image_height = 64;
@@ -14,14 +14,14 @@ constexpr float test_optimal_t_measure = 0.15;
 constexpr float test_optimal_R_measure = 0.0;
 
 // SET THESE: TESTING FOLDER LOCATIONS
-const string dataset_name = "hololens-dataset";
+const string dataset_name = "7scenes";
 const string system_name = "keyframe_" + dataset_name + "_" + to_string(test_image_width) + "_" + to_string(test_image_height) + "_" + to_string(test_n_measurement_frames) + "_dvmvs_fusionnet_online";
 
 const string param_folder = "./params_cpp/";
-const string scene_folder = "./images/";
+const string scene_folder = "./images_7scenes/";
 const string scene = "000";
 
-constexpr int n_test_frames = 50;
+// constexpr int n_test_frames = 50;
 
 constexpr float scale_rgb = 255.0;
 constexpr float mean_rgb[3] = {0.485, 0.456, 0.406};
