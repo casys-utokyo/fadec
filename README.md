@@ -210,7 +210,7 @@ TBD
 
 ### Execution Time
 
-- Execute C++ implementations by the following commands.
+- Execute C++ implementations by the following commands on ZCU104.
 
     ```bash
     $ cd /path/to/cpp
