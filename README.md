@@ -206,6 +206,10 @@ TBD
 - Download and place `params_cpp` under [`./eval/cpp`](./eval/cpp) from [params_cpp.zip](https://projects.n-hassy.info/storage/fadec/params_cpp.zip) if necessary.
 - Download and place `params_cpp_with_ptq` under [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) from [params_cpp_with_ptq.zip](https://projects.n-hassy.info/storage/fadec/params_cpp_with_ptq.zip) if necessary.
 - Place [`./eval/cpp`](./eval/cpp) and [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) on ZCU104.
+
+
+### Execution Time
+
 - Execute C++ implementations by the following commands.
 
     ```bash
@@ -226,7 +230,13 @@ TBD
     ```
 
 
-## Reference
+### Overhead
+
+- Execute [`./eval/fadec/overhead_evaluation.ipynb`](./eval/fadec/overhead_evaluation.ipynb) on ZCU104.
+    - The final cell shows the overhead time.
+
+
+# Reference
 
 ```
 @inproceedings{Duzceker_2021_CVPR,
