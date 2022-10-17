@@ -5,8 +5,8 @@ class Config:
     train_n_depth_levels = 64
 
     # test settings
-    org_image_width = 320
-    org_image_height = 256
+    org_image_width = 640
+    org_image_height = 480
     test_image_width = 96
     test_image_height = 64
 
