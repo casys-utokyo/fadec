@@ -17,8 +17,8 @@ constexpr float test_optimal_R_measure = 0.0;
 const string dataset_name = "hololens-dataset";
 const string system_name = "keyframe_" + dataset_name + "_" + to_string(test_image_width) + "_" + to_string(test_image_height) + "_" + to_string(test_n_measurement_frames) + "_dvmvs_fusionnet_online";
 
-const string param_folder = "./params_cpp_with_ptq";
-const string scene_folder = "./images";
+const string param_folder = "./params_cpp_with_ptq/";
+const string scene_folder = "./images/";
 const string scene = "000";
 
 constexpr int n_test_frames = 50;

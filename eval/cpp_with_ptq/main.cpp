@@ -41,7 +41,7 @@ int ln_cnt;
 
 void set_idx(string filename, const int n_files, int* start_idx) {
     int n_params[n_files];
-    string filepath = param_folder + "/" + filename;
+    string filepath = param_folder + filename;
     ifstream ifs(filepath);
     if (!ifs) {
         cerr << "FileNotFound: " + filepath << "\n";
@@ -58,7 +58,7 @@ void set_idx(string filename, const int n_files, int* start_idx) {
 
 template<class T>
 void set_param(string filename, const int n_params, T* params) {
-    string filepath = param_folder + "/" + filename;
+    string filepath = param_folder + filename;
     ifstream ifs(filepath);
     if (!ifs) {
         cerr << "FileNotFound: " + filepath << "\n";
@@ -184,9 +184,9 @@ int main() {
     ifstream ifs;
     string file_buf;
 
-    ifs.open(scene_folder + "/K.txt");
+    ifs.open(scene_folder + "K.txt");
     if (!ifs) {
-        cerr << "FileNotFound: " + scene_folder + "/K.txt" << "\n";
+        cerr << "FileNotFound: " + scene_folder + "K.txt" << "\n";
         exit(1);
     }
     float K[3][3];
@@ -212,9 +212,9 @@ int main() {
     for (int i = 0; i < 2; i++) for (int j = 0; j < 3; j++) lstm_K_bottom[i][j] = full_K[i][j] / 32.0;
     for (int j = 0; j < 3; j++) lstm_K_bottom[2][j] = full_K[2][j];
 
-    ifs.open(scene_folder + "/poses.txt");
+    ifs.open(scene_folder + "poses.txt");
     if (!ifs) {
-        cerr << "FileNotFound: " + scene_folder + "/poses.txt" << "\n";
+        cerr << "FileNotFound: " + scene_folder + "poses.txt" << "\n";
         exit(1);
     }
     vector<float> tmp_poses;
@@ -239,7 +239,7 @@ int main() {
         }
     }
 
-    const string image_filedir = "./images/";
+    const string image_filedir = scene_folder;
     const int len_image_filedir = image_filedir.length();
     string image_filenames[n_test_frames];
     for (int i = 0; i < n_test_frames; i++) {
