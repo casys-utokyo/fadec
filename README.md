@@ -229,12 +229,15 @@ TBD
     $ python3 calculate_time.py
     ```
 
-
-### Overhead
-
-- Execute [`./eval/fadec/overhead_evaluation.ipynb`](./eval/fadec/overhead_evaluation.ipynb) on ZCU104.
+- Execute [`./eval/fadec/overhead_evaluation.ipynb`](./eval/fadec/overhead_evaluation.ipynb) on ZCU104 for measuring the overhead time.
     - The final cell shows the overhead time.
 
+
+### Hardware Resources
+
+- Run `Open Implemented Design > Report Utilization` in Vivado.
+
+    ![Utilization](./img/utilization.png)
 
 # Reference
 
