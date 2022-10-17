@@ -229,15 +229,42 @@ TBD
     $ python3 calculate_time.py
     ```
 
-- Execute [`./eval/fadec/overhead_evaluation.ipynb`](./eval/fadec/overhead_evaluation.ipynb) on ZCU104 for measuring the overhead time.
-    - The final cell shows the overhead time.
+    - The execution time per frame is shown in the table below.
+        - Note: The results in this project have some measurement errors compared with those in the paper.
 
+        | Platform          | median [s] | std [s] |
+        | ----------------- | ---------: | ------: |
+        | CPU-only          | 16.744     | 0.049   |
+        | CPU-only (w/ PTQ) | 13.248     | 0.035   |
+        | PL + CPU (ours)   | **0.278**  | 0.118   |
+
+
+- Execute [`./eval/fadec/overhead_evaluation.ipynb`](./eval/fadec/overhead_evaluation.ipynb) on ZCU104 to measure the overhead time.
+    - The overhead is **4.7 ms**.
+    - The final cell shows the overhead time.
+        - Note: The results in this project have some measurement errors compared with those in the paper.
+
+- See `Open Implemented Design > Timing > Clock Summary` in Vivado to check the clock frequency.
+    - The frequency is **187.512 MHz**.
+
+    ![Clock Frequency](./img/frequency.png)
 
 ### Hardware Resources
 
 - Run `Open Implemented Design > Report Utilization` in Vivado.
 
     ![Utilization](./img/utilization.png)
+
+    - The hardware resource utilization is shown in the table below.
+
+        | Name  | #Utilization | Available | Utilization [%] |
+        | ----- | -----------: | --------: | --------------: |
+        | Slice | 28256        | 28800     | **98.1**        |
+        | LUT   | 176377       | 230400    | 76.6            |
+        | FF    | 143072       | 460800    | 31.0            |
+        | DSP   | 128          | 1728      | 7.41            |
+        | BRAM  | 309          | 312       | **99.0**        |
+
 
 # Reference
 
