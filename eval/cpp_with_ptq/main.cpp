@@ -39,12 +39,9 @@ int oout_shifts[n_others];
 
 int ln_cnt;
 
-
-const string save_dir = "./results/";
-
 void set_idx(string filename, const int n_files, int* start_idx) {
     int n_params[n_files];
-    string filepath = "./params_cpp_with_ptq/" + filename;
+    string filepath = param_folder + "/" + filename;
     ifstream ifs(filepath);
     if (!ifs) {
         cerr << "FileNotFound: " + filepath << "\n";
@@ -61,7 +58,7 @@ void set_idx(string filename, const int n_files, int* start_idx) {
 
 template<class T>
 void set_param(string filename, const int n_params, T* params) {
-    string filepath = "./params_cpp_with_ptq/" + filename;
+    string filepath = param_folder + "/" + filename;
     ifstream ifs(filepath);
     if (!ifs) {
         cerr << "FileNotFound: " + filepath << "\n";
@@ -415,7 +412,7 @@ int main() {
         loops++;
 
 
-        string output_filepath = save_dir + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
+        string output_filepath = "./results/" + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
         ofs.open(output_filepath, ios::out|ios::binary|ios::trunc);
         if (!ofs) {
             cerr << "FileNotFound: " + output_filepath << "\n";
