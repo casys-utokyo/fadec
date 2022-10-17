@@ -1,13 +1,19 @@
 import os
 from path import Path
 import struct
+import shutil
 
 import cv2
 
 def convert_hololens():
-    image_dir = os.path.dirname(os.path.abspath(__file__)) / Path("../../dataset/hololens-dataset/000/images/")
-    save_dir = os.path.dirname(os.path.abspath(__file__)) / Path("images")
+    base_dir = Path(os.path.dirname(os.path.abspath(__file__)))
+    scene_dir = base_dir / "../../dataset/hololens-dataset/000"
+    image_dir = scene_dir / "images"
+    save_dir = base_dir / "images"
     os.makedirs(save_dir, exist_ok=True)
+
+    shutil.copy(scene_dir / "K.txt", save_dir)
+    shutil.copy(scene_dir / "poses.txt", save_dir)
 
     for i in range(20):
         print("Processing %05d.png" % (i+3))

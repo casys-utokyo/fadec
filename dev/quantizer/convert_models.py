@@ -3,7 +3,6 @@ from path import Path
 
 import os
 import struct
-import shutil
 from config import Config
 
 def convert():
@@ -36,9 +35,6 @@ def convert():
 
     param_cpp_dir = param_dir / "params_cpp"
     os.makedirs(param_cpp_dir, exist_ok=True)
-    scene_folder = base_dir / Config.test_online_scene_path
-    shutil.copy(scene_folder / "K.txt", param_cpp_dir)
-    shutil.copy(scene_folder / "poses.txt", param_cpp_dir)
 
     fpp = open(param_cpp_dir / "params", "wb")
     fvv = open(param_cpp_dir / "values", "wb")

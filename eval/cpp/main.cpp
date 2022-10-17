@@ -16,15 +16,13 @@ float* params = new float[2725512 + 62272 + 8990848 + 18874368 + 4066277];
 int start_idx[n_files + 1];
 int param_cnt;
 
-const string save_dir = "./results/";
-
 void read_params() {
     ifstream ifs;
 
     int n_params[n_files];
-    ifs.open("./params_cpp/values");
+    ifs.open(param_folder + "/values");
     if (!ifs) {
-        cerr << "FileNotFound: ./params_cpp/values" << "\n";
+        cerr << "FileNotFound: " + param_folder + "/values" << "\n";
         exit(1);
     }
     ifs.read((char*) n_params, sizeof(int) * n_files);
@@ -34,9 +32,9 @@ void read_params() {
     for (int i = 0; i < n_files; i++)
         start_idx[i+1] = start_idx[i] + n_params[i];
 
-    ifs.open("./params_cpp/params");
+    ifs.open(param_folder + "/params");
     if (!ifs) {
-        cerr << "FileNotFound: ./params_cpp/params" << "\n";
+        cerr << "FileNotFound: " + param_folder + "/params" << "\n";
         exit(1);
     }
     ifs.read((char*) params, sizeof(float) * start_idx[n_files]);
@@ -321,7 +319,7 @@ int main() {
         mean_time += time_cur;
         loops++;
 
-        string output_filepath = save_dir + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
+        string output_filepath = "./results/" + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
         ofs.open(output_filepath, ios::out|ios::binary|ios::trunc);
         if (!ofs) {
             cerr << "FileNotFound: " + output_filepath << "\n";
