@@ -1,4 +1,5 @@
-dev/dataset_converter/7scenes/data
+dev/dataset_converter/7scenes/data_7scenes
+dev/dataset_converter/7scenes/images_7scenes
 dev/dataset_converter/hololens/images
 
 dev/params/org_weights
