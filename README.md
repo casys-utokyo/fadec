@@ -94,16 +94,16 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
 
 ## 2. Adjust datasets to our implementation
 
-- Execute [`./dev/dataset_converter/hololens/convert_images.py`](./dev/dataset_converter/hololens/convert_images.py) and [`./dev/dataset_converter/7scenes/convert_data.py`](./dev/dataset_converter/7scenes/convert_data.py) by the following commands.
+- Execute [`./dev/dataset_converter/hololens/convert_hololens.py`](./dev/dataset_converter/hololens/convert_hololens.py) and [`./dev/dataset_converter/7scenes/convert_7scenes.py`](./dev/dataset_converter/7scenes/convert_7scenes.py) by the following commands.
 
     ```bash
     $ cd dev/dataset_converter/hololens
-    $ python3 convert_images.py
+    $ python3 convert_hololens.py
     $ cd ../7scenes
-    $ python3 convert_data.py
+    $ python3 convert_7scenes.py
     ```
 
-    - Outputs will be stored in `hololens/images` and `7scenes/data`.
+    - Outputs will be stored in `hololens/images`, `7scenes/data_images`, and `7scenes/data_7scenes`.
 
 
 ## 3. Quantize weights and activation
