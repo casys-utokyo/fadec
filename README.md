@@ -1,6 +1,6 @@
 # FADEC
 
-**FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design with NNgen**
+**FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design**
 
 Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 

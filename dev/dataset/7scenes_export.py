@@ -68,11 +68,15 @@ def predict(input_folder, output_folder):
                 fout.write("%.18e " % pose[j])
             fout.write("%.18e\n" % pose[15])
 
+        raw_height, raw_width, _ = image.shape
+        image = image[preprocessor.crop_y:raw_height - preprocessor.crop_y, preprocessor.crop_x:raw_width - preprocessor.crop_x, :]
         image = cv2.resize(image, (Config.test_image_width, Config.test_image_height), interpolation=cv2.INTER_LINEAR)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         cv2.imwrite(save_dir / ("images/%06d.png" % i), image.astype(np.uint8))
 
         depth = np.round(cv2.imread(depth_filenames[i], -1)).astype(np.uint16)
+        raw_height, raw_width = depth.shape
+        depth = depth[preprocessor.crop_y:raw_height - preprocessor.crop_y, preprocessor.crop_x:raw_width - preprocessor.crop_x]
         depth = depth.astype(float) * 10.0
         depth = cv2.resize(depth, (Config.test_image_width, Config.test_image_height), interpolation=cv2.INTER_NEAREST)
         cv2.imwrite(save_dir / ("depth/%06d.png" % i), depth.astype(np.uint16))
