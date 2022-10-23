@@ -14,9 +14,13 @@ dev/params/flattened_params
 
 eval/cpp/results_7scenes/*
 !eval/cpp/results_7scenes/.gitkeep
+eval/cpp/results_hololens/*
+!eval/cpp/results_hololens/.gitkeep
 
 eval/cpp_with_ptq/results_7scenes/*
 !eval/cpp_with_ptq/results_7scenes/.gitkeep
+eval/cpp_with_ptq/results_hololens/*
+!eval/cpp_with_ptq/results_hololens/.gitkeep
 
 eval/fadec/design_1.bit
 eval/fadec/design_1.hwh
