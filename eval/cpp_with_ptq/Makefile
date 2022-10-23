@@ -8,6 +8,12 @@ main: functional.o dataset_loader.o keyframe_buffer.o utils.o main.o
 main.o: main.cpp
 	$(CC) $(CFLAGS) $(EIGEN) -c main.cpp
 
+7scenes: functional.o dataset_loader.o keyframe_buffer.o utils.o 7scenes_evaluation.o
+	$(CC) $(CFLAGS) functional.o dataset_loader.o keyframe_buffer.o utils.o 7scenes_evaluation.o
+
+7scenes_evaluation.o: 7scenes_evaluation.cpp
+	$(CC) $(CFLAGS) $(EIGEN) -c 7scenes_evaluation.cpp
+
 utils.o: utils.cpp
 	$(CC) $(CFLAGS) $(EIGEN) -c utils.cpp
 
