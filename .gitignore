@@ -12,6 +12,12 @@ dev/params/quantized_params
 dev/params/tmp
 dev/params/flattened_params
 
+eval/cpp/results_7scenes/*
+!eval/cpp/results_7scenes/.gitkeep
+
+eval/cpp_with_ptq/results_7scenes/*
+!eval/cpp_with_ptq/results_7scenes/.gitkeep
+
 eval/fadec/design_1.bit
 eval/fadec/design_1.hwh
 eval/fadec/depths/*.npz
