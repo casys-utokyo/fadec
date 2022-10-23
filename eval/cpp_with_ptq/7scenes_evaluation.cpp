@@ -1,4 +1,4 @@
-#include "config_7scenes.h"
+#include "config.h"
 #include "functional.h"
 #include "activation.h"
 #include "conv.h"
@@ -186,7 +186,7 @@ int main() {
         float warp_grid[3][width_2 * height_2];
         get_warp_grid_for_cost_volume_calculation(warp_grid);
 
-        printf("Predicting for scene:%s\n", scene.c_str());
+        printf("Predicting for scene:%s\n", test_dataset_name.c_str());
 
         KeyframeBuffer keyframe_buffer;
 

@@ -1,7 +1,8 @@
 #include "config.h"
 #include "functional.h"
-#include "activation.h"
 #include "conv.h"
+#include "activation.h"
+#include "batchnorm.h"
 #include "layers.h"
 #include "mnasnet.h"
 #include "model.h"
@@ -11,162 +12,75 @@
 #include <Eigen/LU>
 using namespace Eigen;
 
-int conv_cnt;
-int bn_cnt;
-int add_cnt;
-int other_cnt;
-int act_cnt;
+float* params = new float[2725512 + 62272 + 8990848 + 18874368 + 4066277];
+int start_idx[n_files + 1];
+int param_cnt;
 
-qwint* weights = new qwint[n_weights];
-int w_idx[n_convs];
-int w_shifts[n_convs];
+void read_params() {
+    ifstream ifs;
 
-qbint* biases = new qbint[n_biases];
-int b_idx[n_convs];
-int b_shifts[n_convs];
-
-qsint* scales = new qsint[n_scales];
-int s_idx[n_bns];
-int s_shifts[n_bns];
-
-int cin_shifts[n_convs];
-int cout_shifts[n_convs];
-int ain1_shifts[n_adds];
-int ain2_shifts[n_adds];
-int aout_shifts[n_adds];
-int oin_shifts[n_others];
-int oout_shifts[n_others];
-
-int ln_cnt;
-
-void set_idx(string filename, const int n_files, int* start_idx) {
     int n_params[n_files];
-    string filepath = param_folder + filename;
-    ifstream ifs(filepath);
+    ifs.open(param_folder + "values");
     if (!ifs) {
-        cerr << "FileNotFound: " + filepath << "\n";
+        cerr << "FileNotFound: " + param_folder + "values" << "\n";
         exit(1);
     }
     ifs.read((char*) n_params, sizeof(int) * n_files);
     ifs.close();
 
     start_idx[0] = 0;
-    for (int i = 0; i < n_files - 1; i++)
+    for (int i = 0; i < n_files; i++)
         start_idx[i+1] = start_idx[i] + n_params[i];
-}
 
-
-template<class T>
-void set_param(string filename, const int n_params, T* params) {
-    string filepath = param_folder + filename;
-    ifstream ifs(filepath);
+    ifs.open(param_folder + "params");
     if (!ifs) {
-        cerr << "FileNotFound: " + filepath << "\n";
+        cerr << "FileNotFound: " + param_folder + "params" << "\n";
         exit(1);
     }
-    ifs.read((char*) params, sizeof(T) * n_params);
+    ifs.read((char*) params, sizeof(float) * start_idx[n_files]);
     ifs.close();
 }
 
 
-void read_params() {
-    set_idx("n_weights", n_convs, w_idx);
-    set_param<qwint>("weights_quantized", n_weights, weights);
-    set_param<int>("weight_shifts", n_convs, w_shifts);
-
-    set_idx("n_biases", n_convs, b_idx);
-    set_param<qbint>("biases_quantized", n_biases, biases);
-    set_param<int>("bias_shifts", n_convs, b_shifts);
-
-    set_idx("n_scales", n_bns, s_idx);
-    set_param<qsint>("scales_quantized", n_scales, scales);
-    set_param<int>("scale_shifts", n_bns, s_shifts);
-
-    set_param<int>("cin_shifts", n_convs, cin_shifts);
-    set_param<int>("cout_shifts", n_convs, cout_shifts);
-    set_param<int>("ain1_shifts", n_adds, ain1_shifts);
-    set_param<int>("ain2_shifts", n_adds, ain2_shifts);
-    set_param<int>("aout_shifts", n_adds, aout_shifts);
-    set_param<int>("oin_shifts", n_others, oin_shifts);
-    set_param<int>("oout_shifts", n_others, oout_shifts);
-
-    constexpr int irregulars[4] = {64, 72, 78, 93}; // 応急処置
-    for (int idx : irregulars) cin_shifts[idx]--;
-}
-
-
-void predict(const qaint reference_image[3 * test_image_height * test_image_width],
+void predict(const float reference_image[3 * test_image_height * test_image_width],
              const int n_measurement_frames,
-             const qaint measurement_feature_halfs[test_n_measurement_frames * fpn_output_channels * height_2 * width_2],
+             const float measurement_feature_halfs[test_n_measurement_frames * fpn_output_channels * height_2 * width_2],
              const float* warpings,
-             qaint reference_feature_half[fpn_output_channels * height_2 * width_2],
-             qaint hidden_state[hid_channels * height_32 * width_32],
-             qaint cell_state[hid_channels * height_32 * width_32],
-             qaint depth_full[test_image_height * test_image_width],
-             const string filename) {
+             float reference_feature_half[fpn_output_channels * height_2 * width_2],
+             float hidden_state[hid_channels * height_32 * width_32],
+             float cell_state[hid_channels * height_32 * width_32],
+             float prediction[test_image_height * test_image_width]) {
 
-    conv_cnt = 0;
-    bn_cnt = 0;
-    add_cnt = 0;
-    other_cnt = 0;
-    act_cnt = 0;
-    ln_cnt = 0;
+    param_cnt = 0;
 
-    const int act_in = act_cnt++;
+    float layer1[channels_1 * height_2 * width_2];
+    float layer2[channels_2 * height_4 * width_4];
+    float layer3[channels_3 * height_8 * width_8];
+    float layer4[channels_4 * height_16 * width_16];
+    float layer5[channels_5 * height_32 * width_32];
+    FeatureExtractor(reference_image, layer1, layer2, layer3, layer4, layer5);
 
-    qaint layer1[channels_1 * height_2 * width_2];
-    qaint layer2[channels_2 * height_4 * width_4];
-    qaint layer3[channels_3 * height_8 * width_8];
-    qaint layer4[channels_4 * height_16 * width_16];
-    qaint layer5[channels_5 * height_32 * width_32];
-    int act_out_layer1;
-    int act_out_layer2;
-    int act_out_layer3;
-    int act_out_layer4;
-    int act_out_layer5;
-    FeatureExtractor(reference_image, layer1, layer2, layer3, layer4, layer5,
-                     act_in, act_out_layer1, act_out_layer2, act_out_layer3, act_out_layer4, act_out_layer5);
-
-    qaint reference_feature_quarter[fpn_output_channels * height_4 * width_4];
-    qaint reference_feature_one_eight[fpn_output_channels * height_8 * width_8];
-    qaint reference_feature_one_sixteen[fpn_output_channels * height_16 * width_16];
-    int act_out_half;
-    int act_out_quarter;
-    int act_out_one_eight;
-    int act_out_one_sixteen;
-    FeatureShrinker(layer1, layer2, layer3, layer4, layer5, reference_feature_half, reference_feature_quarter, reference_feature_one_eight, reference_feature_one_sixteen,
-                    act_out_layer1, act_out_layer2, act_out_layer3, act_out_layer4, act_out_layer5,
-                    act_out_half, act_out_quarter, act_out_one_eight, act_out_one_sixteen);
+    float reference_feature_quarter[fpn_output_channels * height_4 * width_4];
+    float reference_feature_one_eight[fpn_output_channels * height_8 * width_8];
+    float reference_feature_one_sixteen[fpn_output_channels * height_16 * width_16];
+    FeatureShrinker(layer1, layer2, layer3, layer4, layer5, reference_feature_half, reference_feature_quarter, reference_feature_one_eight, reference_feature_one_sixteen);
 
     if (n_measurement_frames == 0) return;
 
-    qaint cost_volume[n_depth_levels * height_2 * width_2];
-    int act_out_cost_volume;
-    cost_volume_fusion(reference_feature_half, n_measurement_frames, measurement_feature_halfs, warpings, cost_volume,
-                       act_out_half, act_out_cost_volume);
+    float cost_volume[n_depth_levels * height_2 * width_2];
+    cost_volume_fusion(reference_feature_half, n_measurement_frames, measurement_feature_halfs, warpings, cost_volume);
 
-    qaint skip0[hyper_channels * height_2 * width_2];
-    qaint skip1[(hyper_channels * 2) * height_4 * width_4];
-    qaint skip2[(hyper_channels * 4) * height_8 * width_8];
-    qaint skip3[(hyper_channels * 8) * height_16 * width_16];
-    qaint bottom[(hyper_channels * 16) * height_32 * width_32];
-    int act_out_skip0;
-    int act_out_skip1;
-    int act_out_skip2;
-    int act_out_skip3;
-    int act_out_bottom;
+    float skip0[hyper_channels * height_2 * width_2];
+    float skip1[(hyper_channels * 2) * height_4 * width_4];
+    float skip2[(hyper_channels * 4) * height_8 * width_8];
+    float skip3[(hyper_channels * 8) * height_16 * width_16];
+    float bottom[(hyper_channels * 16) * height_32 * width_32];
     CostVolumeEncoder(reference_feature_half, reference_feature_quarter, reference_feature_one_eight, reference_feature_one_sixteen, cost_volume,
-                      skip0, skip1, skip2, skip3, bottom, filename,
-                      act_out_half, act_out_quarter, act_out_one_eight, act_out_one_sixteen, act_out_cost_volume,
-                      act_out_skip0, act_out_skip1, act_out_skip2, act_out_skip3, act_out_bottom);
+                      skip0, skip1, skip2, skip3, bottom);
 
-    int act_out_hidden_state;
-    int act_out_cell_state;
-    LSTMFusion(bottom, hidden_state, cell_state, filename, act_out_bottom, act_out_hidden_state, act_out_cell_state);
+    LSTMFusion(bottom, hidden_state, cell_state);
 
-    int act_out_depth_full;
-    CostVolumeDecoder(reference_image, skip0, skip1, skip2, skip3, hidden_state, depth_full,
-                      act_in, act_out_skip0, act_out_skip1, act_out_skip2, act_out_skip3, act_out_hidden_state, act_out_depth_full);
+    CostVolumeDecoder(reference_image, skip0, skip1, skip2, skip3, hidden_state, prediction);
 }
 
 
@@ -228,6 +142,7 @@ int main() {
     }
     ifs.close();
 
+    // const int n_poses = tmp_poses.size() / 16;
     float poses[n_test_frames][4 * 4];
     int poses_idx = 0;
     for (int i = 0; i < n_test_frames; i++) {
@@ -238,6 +153,7 @@ int main() {
             }
         }
     }
+    // print1(n_poses);
 
     const string image_filedir = scene_folder;
     const int len_image_filedir = image_filedir.length();
@@ -257,8 +173,8 @@ int main() {
     float previous_pose[4 * 4];
 
     bool state_exists = false;
-    qaint hidden_state[hid_channels * height_32 * width_32];
-    qaint cell_state[hid_channels * height_32 * width_32];
+    float hidden_state[hid_channels * height_32 * width_32];
+    float cell_state[hid_channels * height_32 * width_32];
 
     ofstream ofs;
     double min_time = 10000;
@@ -282,15 +198,11 @@ int main() {
             continue;
         }
 
-        float reference_image_float[3 * test_image_height * test_image_width];
-        load_image(image_filenames[f], reference_image_float);
-        qaint reference_image[3 * test_image_height * test_image_width];
-        const int ashift = cin_shifts[0];
-        for (int idx = 0; idx < 3 * test_image_height * test_image_width; idx++)
-            reference_image[idx] = reference_image_float[idx] * (1 << ashift);
+        float reference_image[3 * test_image_height * test_image_width];
+        load_image(image_filenames[f], reference_image);
 
         float measurement_poses[test_n_measurement_frames * 4 * 4];
-        qaint measurement_feature_halfs[test_n_measurement_frames * fpn_output_channels * height_2 * width_2];
+        float measurement_feature_halfs[test_n_measurement_frames * fpn_output_channels * height_2 * width_2];
         const int n_measurement_frames = keyframe_buffer.get_best_measurement_frames(reference_pose, measurement_poses, measurement_feature_halfs);
 
         // prepare for cost volume fusion
@@ -374,26 +286,22 @@ int main() {
 
             float in_hidden_state[hid_channels][height_32][width_32];
             for (int i = 0; i < hid_channels; i++) for (int j = 0; j < height_32; j++) for (int k = 0; k < width_32; k++)
-                in_hidden_state[i][j][k] = hidden_state[(i * height_32 + j) * width_32 + k] / (float) (1 << hiddenshift);
+                in_hidden_state[i][j][k] = hidden_state[(i * height_32 + j) * width_32 + k];
             float out_hidden_state[hid_channels][height_32][width_32];
             warp_frame_depth(in_hidden_state, depth_estimation[0], trans, lstm_K_bottom, out_hidden_state);
 
             for (int i = 0; i < hid_channels; i++) for (int j = 0; j < height_32; j++) for (int k = 0; k < width_32; k++)
-                hidden_state[(i * height_32 + j) * width_32 + k] = (depth_estimation[0][j][k] <= 0.01) ? 0.0 : out_hidden_state[i][j][k] * (1 << hiddenshift);
+                hidden_state[(i * height_32 + j) * width_32 + k] = (depth_estimation[0][j][k] <= 0.01) ? 0.0 : out_hidden_state[i][j][k];
         }
 
-        qaint reference_feature_half[fpn_output_channels * height_2 * width_2];
-        qaint depth_full[test_image_height * test_image_width];
+        float reference_feature_half[fpn_output_channels * height_2 * width_2];
+        float prediction[test_image_height * test_image_width];
         predict(reference_image, n_measurement_frames, measurement_feature_halfs,
-                warpings, reference_feature_half, hidden_state, cell_state, depth_full, image_filenames[f].substr(len_image_filedir, 5));
+                warpings, reference_feature_half, hidden_state, cell_state, prediction);
         delete[] warpings;
 
         keyframe_buffer.add_new_keyframe(reference_pose, reference_feature_half);
         if (response == 0) continue;
-
-        float prediction[test_image_height * test_image_width];
-        for (int idx = 0; idx < test_image_height * test_image_width; idx++)
-            prediction[idx] = 1.0 / (inverse_depth_multiplier * (depth_full[idx] / (float) (1 << sigshift)) + inverse_depth_base);
 
         for (int i = 0 ; i < test_image_height; i++) for (int j = 0; j < test_image_width; j++)
             previous_depth[i][j] = prediction[i * test_image_width + j];
@@ -411,8 +319,7 @@ int main() {
         mean_time += time_cur;
         loops++;
 
-
-        string output_filepath = "./results/" + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
+        string output_filepath = "./results_hololens/" + image_filenames[f].substr(len_image_filedir, 5) + ".bin";
         ofs.open(output_filepath, ios::out|ios::binary|ios::trunc);
         if (!ofs) {
             cerr << "FileNotFound: " + output_filepath << "\n";
@@ -430,9 +337,6 @@ int main() {
     print2("Max  time:", max_time);
     print2("Mean time:", mean_time / loops);
 
-    delete[] weights;
-    delete[] biases;
-    delete[] scales;
-
+    delete[] params;
     return 0;
 }

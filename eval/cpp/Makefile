@@ -2,17 +2,17 @@ CC := g++
 CFLAGS := -Wall -std=c++11 -O3
 EIGEN := -I /usr/include/eigen3
 
-main: functional.o dataset_loader.o keyframe_buffer.o utils.o main.o
-	$(CC) $(CFLAGS) functional.o dataset_loader.o keyframe_buffer.o utils.o main.o
-
-main.o: main.cpp
-	$(CC) $(CFLAGS) $(EIGEN) -c main.cpp
-
 7scenes: functional.o dataset_loader.o keyframe_buffer.o utils.o 7scenes_evaluation.o
 	$(CC) $(CFLAGS) functional.o dataset_loader.o keyframe_buffer.o utils.o 7scenes_evaluation.o
 
 7scenes_evaluation.o: 7scenes_evaluation.cpp
 	$(CC) $(CFLAGS) $(EIGEN) -c 7scenes_evaluation.cpp
+
+hololens: functional.o dataset_loader.o keyframe_buffer.o utils.o hololens_evaluation.o
+	$(CC) $(CFLAGS) functional.o dataset_loader.o keyframe_buffer.o utils.o hololens_evaluation.o
+
+hololens_evaluation.o: hololens_evaluation.cpp
+	$(CC) $(CFLAGS) $(EIGEN) -c hololens_evaluation.cpp
 
 utils.o: utils.cpp
 	$(CC) $(CFLAGS) $(EIGEN) -c utils.cpp
