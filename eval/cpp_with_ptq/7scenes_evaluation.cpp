@@ -180,7 +180,7 @@ int main() {
     printf("Predicting with System: %s\n", system_name.c_str());
     printf("# of Measurement Frames: %d\n", test_n_measurement_frames);
 
-    const string test_dataset_names[9] = {"chess-seq-01", "chess-seq-02", "fire-seq-01", "fire-seq-02", "heads-seq-02", "office-seq-01", "office-seq-03", "redkitchen-seq-01", "redkitchen-seq-07"};
+    const string test_dataset_names[8] = {"chess-seq-01", "chess-seq-02", "fire-seq-01", "fire-seq-02", "office-seq-01", "office-seq-03", "redkitchen-seq-01", "redkitchen-seq-07"};
 
     for (auto test_dataset_name : test_dataset_names) {
         float warp_grid[3][width_2 * height_2];
@@ -203,8 +203,8 @@ int main() {
             }
             closedir (dir);
         } else {
-            perror ("opendir");
-            return EXIT_FAILURE;
+            cout << "FolderNotFound: " << test_dataset_name << "\n";
+            continue;
         }
         sort(files.begin(), files.end());
 
