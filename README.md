@@ -206,6 +206,8 @@ TBD
 - Download and place `params_cpp` under [`./eval/cpp`](./eval/cpp) from [params_cpp.zip](https://projects.n-hassy.info/storage/fadec/params_cpp.zip) if necessary.
 - Download and place `params_cpp_with_ptq` under [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) from [params_cpp_with_ptq.zip](https://projects.n-hassy.info/storage/fadec/params_cpp_with_ptq.zip) if necessary.
 - Place [`./eval/cpp`](./eval/cpp) and [`./eval/cpp_with_ptq`](./eval/cpp_with_ptq) on ZCU104.
+    - Be careful that `images_7scenes` directory in those directories may be **too large to place on ZCU104**.
+    - If you cannot place all the data together, place some of the directories in `images_7scenes` on ZCU104.
 
 
 ### Execution Time
@@ -221,7 +223,7 @@ TBD
     $ ./a.out > time_cpp_with_ptq.txt
     ```
 
-    - Outputs will be stored in `results` and (`time_cpp.txt` or `time_cpp_with_ptq.txt`).
+    - Outputs will be stored in `results_7scenes` and (`time_cpp.txt` or `time_cpp_with_ptq.txt`).
 - Execute [`./eval/calculate_time.py`](./eval/calculate_time.py) by the following commands.
 
     ```bash
@@ -266,6 +268,30 @@ TBD
         | FF    | 143072       | 460800    | 31.0            |
         | DSP   | 128          | 1728      | 7.41            |
         | BRAM  | 309          | 312       | **99.0**        |
+
+
+### Accuracy
+
+- Execute [`./eval/calculate_errors.py`](./eval/calculate_errors.py) by the following commands.
+
+    ```bash
+    $ cd /path/to/eval
+    $ python3 calculate_errors.py
+    ```
+
+    - The MSE values for each scene and implementation are printed.
+
+        ```
+        Dataset Nemes:  ['chess-seq-01', 'chess-seq-02', 'fire-seq-01', 'fire-seq-02', 'office-seq-01', 'office-seq-03', 'redkitchen-seq-01', 'redkitchen-seq-07']
+        MSE:
+                         C++:  [0.95 0.78 0.51 0.38 0.57 0.35 0.77 0.74]
+                C++ (w/ PTQ):  [1.04 0.89 0.57 0.42 0.73 0.48 0.86 0.85]
+                        Ours:  [1.01 0.85 0.54 0.4  0.67 0.42 0.78 0.79]
+        ```
+
+    - The graph will be saved in [`./eval/errors.png`](./eval/errors.png).
+
+        <img src="./img/errors.png" alt="Errors" width="60%">
 
 
 # Reference
