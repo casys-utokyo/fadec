@@ -437,7 +437,6 @@ int main() {
             loops++;
 
             mkdir(("./results_7scenes/" + test_dataset_name).c_str(), 0775);
-
             string output_filepath = "./results_7scenes/" + test_dataset_name + '/' + image_filenames[f].substr(len_image_filedir, 6) + ".bin";
             ofs.open(output_filepath, ios::out|ios::binary|ios::trunc);
             if (!ofs) {
