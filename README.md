@@ -229,6 +229,15 @@ TBD
     ```bash
     $ cd /path/to/eval
     $ python3 calculate_time.py
+    CPU-only:
+            median 16.833
+            std: 0.048
+    CPU-only (w/ PTQ):
+            median 13.185
+            std: 0.040
+    PL + CPU (ours):
+            median 0.278
+            std: 0.118
     ```
 
     - The execution time per frame is shown in the table below.
