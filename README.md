@@ -289,7 +289,7 @@ TBD
                         Ours:  [1.01 0.85 0.54 0.4  0.67 0.42 0.78 0.79]
         ```
 
-    - The graph will be saved in [`./eval/errors.png`](./eval/errors.png).
+    - The graph will be saved in `./eval/errors.png`.
 
         <img src="./img/errors.png" alt="Errors" width="60%">
 
