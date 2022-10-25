@@ -9,7 +9,7 @@ def convert_hololens():
     base_dir = Path(os.path.dirname(os.path.abspath(__file__)))
     scene_dir = base_dir / "../../dataset/hololens-dataset/000"
     image_dir = scene_dir / "images"
-    save_dir = base_dir / "images"
+    save_dir = base_dir / "images_hololens"
     os.makedirs(save_dir, exist_ok=True)
 
     shutil.copy(scene_dir / "K.txt", save_dir)

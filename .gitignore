@@ -3,7 +3,7 @@ dev/dataset/hololens-dataset
 
 dev/dataset_converter/7scenes/data_7scenes
 dev/dataset_converter/7scenes/images_7scenes
-dev/dataset_converter/hololens/images
+dev/dataset_converter/hololens/images_hololens
 
 dev/params/org_weights
 dev/params/params_cpp
@@ -25,3 +25,5 @@ eval/cpp_with_ptq/results_hololens/*
 eval/fadec/design_1.bit
 eval/fadec/design_1.hwh
 eval/fadec/depths/*.npz
+
+eval/tmp

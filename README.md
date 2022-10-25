@@ -103,7 +103,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     $ python3 convert_7scenes.py
     ```
 
-    - Outputs will be stored in `hololens/images`, `7scenes/data_images`, and `7scenes/data_7scenes`.
+    - Outputs will be stored in `hololens/images_hololens`, `7scenes/images_7scenes`, and `7scenes/data_7scenes`.
 
 
 ## 3. Quantize weights and activation
