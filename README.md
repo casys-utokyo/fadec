@@ -191,7 +191,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     $ python3 dvmvs.py
     ```
 
-    - Outputs will be stored in [`./dev/export_hdl/dvmvs_v1_0`](/dev/export_hdl/dvmvs_v1_0).
+    - Outputs will be stored in [`./dev/export_hdl/dvmvs_v1_0`](/dev/export_hdl/dvmvs_v1_0) and `./dev/params/flattened_params`.
 
 
 ## 6. Generate bitstream
