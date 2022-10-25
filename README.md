@@ -41,6 +41,8 @@ TBD
 
 ### 5th
 
+**Warning: We customized NNgen, we don't recommend you install NNgen by pip (Installation guideline is in 5. Export HDL.).**
+
 - Python 3.8.2
     - nngen==1.3.3
     - numpy==1.22.3
@@ -69,6 +71,15 @@ Note: The environment is changed from "1st to 4th" because we used different mac
         - OpenCV v3.4.3 C++
         - Eigen v3.3.4
 
+## Files in [`./dev/params`](./dev/params/)
+
+- [params_cpp.zip](https://projects.n-hassy.info/storage/fadec/params_cpp.zip): Params used for cpp evaluation.
+- [params_cpp_with_ptq.zip](https://projects.n-hassy.info/storage/fadec/params_cpp_with_ptq.zip): Quantized params used for cpp_with_ptq evaluation.
+- [quantized_params.zip](https://projects.n-hassy.info/storage/fadec/quantized_params.zip): Quantized params, input data, and output data for HDL export.
+- [flattened_params.zip](https://projects.n-hassy.info/storage/fadec/flattened_params.zip): Flattened params for FADEC evaluation.
+
+Note: You can generate these parameters by yourself by following the instructions.
+
 
 ## 1. Prepare pre-trained weights and datasets
 
@@ -91,9 +102,12 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     $ python3 7scenes_export.py
     ```
 
+    - Outputs will be stored in `./dev/dataset/7scenes`.
+
 
 ## 2. Adjust datasets to our implementation
 
+- Input data are `./dev/dataset/hololens-dataset` and `./dev/dataset/7scenes`.
 - Execute [`./dev/dataset_converter/hololens/convert_hololens.py`](./dev/dataset_converter/hololens/convert_hololens.py) and [`./dev/dataset_converter/7scenes/convert_7scenes.py`](./dev/dataset_converter/7scenes/convert_7scenes.py) by the following commands.
 
     ```bash
@@ -108,17 +122,76 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
 
 ## 3. Quantize weights and activation
 
-TBD
+- Execute [`./dev/quantizer/convert_models.py`](./dev/quantizer/convert_models.py) by the following commands.
+
+    ```bash
+    $ cd dev/quantizer
+    $ python3 convert_models.py
+    ```
+
+    - Outputs will be stored in `./dev/params/params_cpp`.
+    - Data stored in `./dev/params/org_weights_bin` is temporary output, so never used again.
+
+- Execute [`./dev/quantizer/weight_quantization.py`](./dev/quantizer/weight_quantization.py) by the following commands.
+
+    ```bash
+    $ cd dev/quantizer
+    $ python3 weight_quantization.py
+    ```
+
+    - Outputs will be stored in `./dev/params/params_cpp_with_ptq` and `./dev/params/quantized_params`.
+
+- Execute [`./dev/quantizer/activation_extraction.py`](./dev/quantizer/activation_extraction.py) by the following commands.
+
+    ```bash
+    $ cd dev/quantizer
+    $ python3 activation_extraction.py
+    ```
+
+    - Data stored in `./dev/params/tmp` is temporary output, so never used again.
+
+- Execute [`./dev/quantizer/activation_quantization.py`](./dev/quantizer/activation_quantization.py) by the following commands.
+
+    ```bash
+    $ cd dev/quantizer
+    $ python3 activation_quantization.py
+    ```
+
+    - Outputs will be added to `./dev/params/params_cpp_with_ptq`.
 
 
 ## 4. Export network input and output
 
-TBD
+- Execute [`./dev/quantizer/export_inout.py`](./dev/quantizer/export_inout.py) by the following commands.
+
+    ```bash
+    $ cd dev/quantizer
+    $ python3 export_inout.py
+    ```
+
+    - Outputs will be added to `./dev/params/quantized_params`.
 
 
 ## 5. Export HDL
 
-TBD
+- Install NNgen by the following commands.
+
+    ```bash
+    $ git clone https://github.com/NNgen/nngen.git
+    $ cd nngen
+    $ git checkout v1.3.3
+    $ cp -r ../dev/export_hdl/nngen_patch/* nngen/
+    $ python3 setup.py install
+    ```
+
+- Execute [`./dev/export_hdl/dvmvs.py`](./dev/export_hdl/dvmvs.py) by the following commands.
+
+    ```bash
+    $ cd dev/export_hdl
+    $ python3 dvmvs.py
+    ```
+
+    - Outputs will be stored in [`./dev/export_hdl/dvmvs_v1_0`](/dev/export_hdl/dvmvs_v1_0).
 
 
 ## 6. Generate bitstream
