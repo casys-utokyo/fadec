@@ -47,7 +47,7 @@ This is a novel FPGA-based accelerator for a depth estimation method "DeepVideoM
 
 ### 5th
 
-**Warning: We customized NNgen, we don't recommend you install NNgen by pip (Installation guideline is in 5. Export HDL.).**
+**Warning: As we customized NNgen, we don't recommend you install NNgen by pip (Installation guideline is in 5. Export HDL.).**
 
 - Python 3.8.2
     - nngen==1.3.3
