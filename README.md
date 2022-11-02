@@ -10,6 +10,12 @@ Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 
+# Publication
+If you use `FADEC` in your research, please cite our paper.
+
+**The paper information will be updated after it is published.**
+
+
 # Summary
 
 This is a novel FPGA-based accelerator for a depth estimation method "DeepVideoMVS", which alternates between traditional image/video processing algorithms and DNNs. We employ HW/SW co-design to appropriately utilize heterogeneous components in modern SoC FPGAs, such as programmable logic (PL) and CPU, according to the inherent characteristics of the method. The hardware and software implementations are executed in parallel on the PL and CPU to hide their execution latencies. This accelerator was developed on a Xilinx ZCU104 board by using NNgen, an open-source high-level synthesis (HLS) tool. Experiments showed that this accelerator operates 60.2 times faster than the software-only implementation on the same FPGA board with minimal accuracy degradation.
