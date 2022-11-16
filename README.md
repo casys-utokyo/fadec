@@ -381,6 +381,10 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
 
         <img src="./img/errors.png" alt="Errors" width="60%">
 
+- Use [`./eval/visualize_image.ipynb`](./eval/visualize_image.ipynb) for qualitative evaluation.
+
+    ![Qualitative Evaluation](./img/qualitative_evaluation.png)
+
 
 # Reference
 
