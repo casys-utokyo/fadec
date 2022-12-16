@@ -23,7 +23,8 @@ If you use `FADEC` in your research, please cite our paper.
     volume    = {},
     number    = {},
     pages     = {1-9},
-    doi       = {10.1109/ICFPT56656.2022.9974565}}
+    doi       = {10.1109/ICFPT56656.2022.9974565}
+}
 ```
 
 For further information on our paper, you can view the following materials.
