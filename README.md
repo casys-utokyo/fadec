@@ -11,9 +11,29 @@ Copyright 2022, Nobuho Hashimoto and Shinya Takamaeda-Yamazaki
 
 
 # Publication
+
 If you use `FADEC` in your research, please cite our paper.
 
-**The paper information will be updated after it is published.**
+```
+@INPROCEEDINGS{9974565,
+    author    = {Hashimoto, Nobuho and Takamaeda-Yamazaki, Shinya},
+    booktitle = {2022 International Conference on Field-Programmable Technology (ICFPT)},
+    title     = {{FADEC: FPGA-based Acceleration of Video Depth Estimation by HW/SW Co-design}},
+    year      = {2022},
+    volume    = {},
+    number    = {},
+    pages     = {1-9},
+    doi       = {10.1109/ICFPT56656.2022.9974565}}
+```
+
+For further information on our paper, you can view the following materials.
+
+- [Paper (IEEE Xplore)](https://ieeexplore.ieee.org/document/9974565)
+- [Paper (arXiv)](https://arxiv.org/abs/2212.00357)
+- [Papers With Code](https://cs.paperswithcode.com/paper/fadec-fpga-based-acceleration-of-video-depth)
+- [GitHub](https://github.com/casys-utokyo/fadec)
+- [Slides](https://speakerdeck.com/hashi0203/sw-co-design-fpt-2022-8082a83d-3167-461c-8560-60f77959a3d5)
+- [Movie](https://youtu.be/NFULXQeu6Vw)
 
 
 # Summary
