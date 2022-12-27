@@ -249,7 +249,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
         ```sh
         $ cd dev/vivado
         $ ./move_bitstream.sh /path/to/dev/vivado pynq:/path/to/fadec
-        # You can also specify a remote directory for the project directory.
+        # You can also specify a remote directory for the former one.
         ```
 
     - You can also download these files from [design_1.zip](https://projects.n-hassy.info/storage/fadec/design_1.zip)
