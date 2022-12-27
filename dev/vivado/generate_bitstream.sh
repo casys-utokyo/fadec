@@ -1,6 +1,6 @@
 #!/bin/bash
 cd `dirname $0`
-proj_name="bg"
+proj_name="dvmvs"
 rm -rf ${proj_name} || true
 vivado -mode batch -source dvmvs.tcl
 if [ $? != 0 ]; then
