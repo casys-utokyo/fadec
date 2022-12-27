@@ -231,6 +231,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     ```
 
     - Outputs will be stored in `./dev/vivado/dvmvs`.
+    - Bitstream files will be stored in `./dev/vivado/design_1`.
     - Note: It will take some hours to finish.
 - The design image is shown in the figure below.
 
@@ -247,8 +248,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
 
         ```sh
         $ cd dev/vivado
-        $ ./move_bitstream.sh /path/to/vivado_project_directory pynq:/path/to/fadec
-        # The project directory would be "./dev/vivado/dvmvs" by default.
+        $ ./move_bitstream.sh /path/to/dev/vivado pynq:/path/to/fadec
         # You can also specify a remote directory for the project directory.
         ```
 
