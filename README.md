@@ -48,11 +48,12 @@ This is a **novel FPGA-based accelerator for a depth estimation method "DeepVide
 1. Adjust datasets to our implementation
 1. Quantize weights and activation
 1. Export network input and output
-1. Export HDL
-1. Generate bitstream
+1. Export HDL using NNgen
+1. Generate bitstream using Vivado
 1. Execute FADEC on ZCU104
 1. Evaluate results
 
+Note: If you just want to execute and evaluate FADEC, move to `7. Execute FADEC on ZCU104`.
 
 ## Settings
 
@@ -68,7 +69,7 @@ This is a **novel FPGA-based accelerator for a depth estimation method "DeepVide
 
 ### 5th
 
-**Warning: As we customized NNgen, we don't recommend you install NNgen by pip (Installation guideline is in 5. Export HDL.).**
+**Warning: As we customized NNgen, we don't recommend you install NNgen by pip (Installation guideline is in 5. Export HDL using NNgen.).**
 
 - Python 3.8.2
     - nngen==1.3.3
@@ -95,7 +96,7 @@ Note: The environment is changed from "1st to 4th" because we used different mac
         - numpy==1.16.0
         - torch==1.10.2
     - g++ (Ubuntu/Linaro 7.3.0-16ubuntu3) 7.3.0 (for the 8th)
-        - OpenCV v3.4.3 C++
+        - OpenCV v3.4.3
         - Eigen v3.3.4
 
 ## Files in [`./dev/params`](./dev/params/)
@@ -199,7 +200,7 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     - Outputs will be added to `./dev/params/quantized_params`.
 
 
-## 5. Export HDL
+## 5. Export HDL using NNgen
 
 - Install NNgen by the following commands.
 
@@ -221,11 +222,11 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     - Outputs will be stored in [`./dev/export_hdl/dvmvs_v1_0`](/dev/export_hdl/dvmvs_v1_0) and `./dev/params/flattened_params`.
 
 
-## 6. Generate bitstream
+## 6. Generate bitstream using Vivado
 
 - Execute [`./dev/vivado/generate_bitstream.sh`](./dev/vivado/generate_bitstream.sh) by the following commands.
 
-    ```sh
+    ```bash
     $ cd dev/vivado
     $ ./generate_bitstream.sh
     ```
@@ -243,10 +244,10 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
 - Prepare datasets by following the 1st and 2nd procedures if necessary.
 - Download and place `flattened_params` under [`./eval/fadec`](./eval/fadec) from [flattened_params.zip](https://projects.n-hassy.info/storage/fadec/flattened_params.zip) if necessary.
 - Place [`./eval/fadec`](./eval/fadec) on ZCU104.
-- Place `design_1.bit` and `design_1.hwh` in `fadec` directory on ZCU104.
-    - [`./dev/vivado/move_bitstream.sh`](./dev/vivado/move_bitstream.sh) is helpful to find and move these files.
+- Place `design_1.bit` and `design_1.hwh` in the directory on ZCU104.
+    - [`./dev/vivado/move_bitstream.sh`](./dev/vivado/move_bitstream.sh) is helpful to move these files.
 
-        ```sh
+        ```bash
         $ cd dev/vivado
         $ ./move_bitstream.sh /path/to/dev/vivado pynq:/path/to/fadec
         # You can also specify a remote directory for the former one.
@@ -354,7 +355,6 @@ RGB-D Dataset 7-Scenes](https://www.microsoft.com/en-us/research/project/rgb-d-d
     - The overhead is **4.7 ms**.
     - The final cell shows the overhead time.
     - Note: The results in this project have some measurement errors compared with those in the paper.
-
 - See `Open Implemented Design > Timing > Clock Summary` in Vivado to check the clock frequency.
 
     ![Clock Frequency](./img/frequency.png)
